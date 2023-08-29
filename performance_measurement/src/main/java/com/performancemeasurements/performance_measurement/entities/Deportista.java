@@ -3,7 +3,8 @@ package com.performancemeasurements.performance_measurement.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.micrometer.common.lang.Nullable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,9 +34,9 @@ public class Deportista {
     private String apellido;
     @Column(name = "DEPORTE")
     private Deporte deporte;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "deportista")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deportista")
     private List<Antropometria> listaAntropometrias;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "deportista")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deportista")
     private List<Entrenamiento> listaEntrenamientos;
 
     public enum Deporte{CICLISMO, ATLETISMO, TRIATLON, FUERZA}

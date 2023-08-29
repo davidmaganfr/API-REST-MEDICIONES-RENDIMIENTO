@@ -3,6 +3,8 @@ package com.performancemeasurements.performance_measurement.entities;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +37,7 @@ public class Entrenamiento {
     private int potenciaMedia;
     @Column(name = "NP")
     private int NP;
+    @JsonIgnore
     @JoinColumn(name = "DEPORTISTA_ID")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Deportista deportista;

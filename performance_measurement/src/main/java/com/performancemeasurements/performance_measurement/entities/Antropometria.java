@@ -1,5 +1,7 @@
 package com.performancemeasurements.performance_measurement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,6 +56,7 @@ public class Antropometria {
     private double humero;
     @Column(name = "FEMUR")
     private double femur;
+    @JsonIgnore
     @JoinColumn(name = "DEPORTISTA_ID")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Deportista deportista;
