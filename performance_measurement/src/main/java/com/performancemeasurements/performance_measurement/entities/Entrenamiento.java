@@ -51,6 +51,11 @@ public class Entrenamiento {
     public static Entrenamiento of(LocalDate fecha, LocalTime tiempoSesion, int pmedia, int np){
         return new Entrenamiento(fecha, tiempoSesion, pmedia, np);
     }
+    @Override
+    public String toString() {
+        return "Entrenamiento [id=" + id + ", fecha=" + fecha + ", tiempoSesion=" + tiempoSesion + ", potenciaMedia="
+                + potenciaMedia + ", NP=" + NP + "]";
+    }
 
     
 }

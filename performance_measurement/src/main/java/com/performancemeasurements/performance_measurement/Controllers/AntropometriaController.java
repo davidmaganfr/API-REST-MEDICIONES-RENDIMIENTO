@@ -1,5 +1,8 @@
 package com.performancemeasurements.performance_measurement.Controllers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,16 @@ public class AntropometriaController {
     public Mono<Antropometria> findById(@PathVariable int id){
         var ant = repo.findById(id);
         return Mono.just(ant.get());
+    }
+
+    @GetMapping("/find/{fecha}")
+    public Flux<Antropometria> findByDate(@PathVariable String fecha){
+        var fechaToLocalDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        var antro = repo.findByFecha(fechaToLocalDate);
+        if (antro == null){
+            throw new RuntimeException("Not found");
+        }
+        return Flux.fromIterable(antro);
     }
 
     @PostMapping("/create")

@@ -1,5 +1,7 @@
 package com.performancemeasurements.performance_measurement.entities;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -26,6 +28,8 @@ public class Antropometria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private int id;
+    @Column(name = "FECHA")
+    private LocalDate fecha;
     @Column(name = "PESO")
     private double peso;
     @Column(name = "ALTURA")
@@ -61,9 +65,10 @@ public class Antropometria {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Deportista deportista;
 
-    public Antropometria(double peso, double altura, double triceps, double biceps, double subEscapular,
+    public Antropometria(LocalDate fecha, double peso, double altura, double triceps, double biceps, double subEscapular,
             double supraEspinal, double abdominal, double muslo, double pierna, double perimetroBrazoContraido,
             double perimetroBrazoRelajado, double perimetroPierna, double biEstiloideo, double humero, double femur) {
+        this.fecha = fecha;
         this.peso = peso;
         this.altura = altura;
         this.triceps = triceps;
@@ -80,5 +85,15 @@ public class Antropometria {
         this.humero = humero;
         this.femur = femur;
     }
- 
+
+    @Override
+    public String toString() {
+        return "Antropometria [id=" + id + ", fecha=" + fecha + ", peso=" + peso + ", altura=" + altura + ", triceps="
+                + triceps + ", biceps=" + biceps + ", subEscapular=" + subEscapular + ", supraEspinal=" + supraEspinal
+                + ", abdominal=" + abdominal + ", muslo=" + muslo + ", pierna=" + pierna + ", perimetroBrazoContraido="
+                + perimetroBrazoContraido + ", perimetroBrazoRelajado=" + perimetroBrazoRelajado + ", perimetroPierna="
+                + perimetroPierna + ", biEstiloideo=" + biEstiloideo + ", humero=" + humero + ", femur=" + femur + "]";
+    }
+    
+    
 }

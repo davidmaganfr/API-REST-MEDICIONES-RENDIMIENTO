@@ -34,6 +34,15 @@ public class DeportistaController {
         return Mono.just(ant.get());
     }
 
+    @GetMapping("/find/{nombre}")
+    public Flux<Deportista> findByName(@PathVariable String nombre){
+        var antro = repo.findByNombre(nombre);
+        if(antro == null){
+            throw new RuntimeException("Not found");
+        }
+        return Flux.fromIterable(antro);
+    }
+
     @PostMapping("/create")
     public Mono<Deportista> create(@RequestBody Deportista deportista){
         repo.save(deportista);

@@ -34,9 +34,9 @@ public class PerformanceMeasurementApplication {
 		var entrenamiento3 = Entrenamiento.of(LocalDate.of(2022, 10, 3), LocalTime.of(4,30,30), 200, 235);
 
 		//ANTROPOMETRIAS
-		var antropometria1 = new Antropometria(70.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
-		var antropometria2 = new Antropometria(75.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
-		var antropometria3 = new Antropometria(80.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
+		var antropometria1 = new Antropometria(LocalDate.of(2022, 12, 10), 70.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
+		var antropometria2 = new Antropometria(LocalDate.of(2023, 10, 2), 75.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
+		var antropometria3 = new Antropometria(LocalDate.of(2024, 8, 10), 80.0, 172.2, 4.3, 5.4, 10.4, 12.5, 15.6, 8.7, 7.8, 35.9, 32.3, 40.4, 6.2, 4.2, 6.3);
 
 		//Añadir entrenamientos y antropometrias al deportista1
 		deportista1.addEntrenamiento(entrenamiento1);
@@ -46,9 +46,12 @@ public class PerformanceMeasurementApplication {
 		deportista1.addAntropometria(antropometria2);
 		deportista1.addAntropometria(antropometria3);
 
-		//
 		repoDep.save(deportista1);
 		repoAntro.save(antropometria1);
+		repoEnnto.save(entrenamiento1);
+		
+
+
 	}
 
 }

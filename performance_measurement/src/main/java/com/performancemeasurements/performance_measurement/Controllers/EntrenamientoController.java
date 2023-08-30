@@ -1,5 +1,8 @@
 package com.performancemeasurements.performance_measurement.Controllers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.performancemeasurements.performance_measurement.DAO.EntrenamientoRepository;
+import com.performancemeasurements.performance_measurement.entities.Antropometria;
 import com.performancemeasurements.performance_measurement.entities.Entrenamiento;
 
 import reactor.core.publisher.Flux;
@@ -23,7 +27,7 @@ public class EntrenamientoController {
     @Autowired
     private EntrenamientoRepository repo;
 
-       @GetMapping("/all")
+    @GetMapping("/all")
     public Flux<Entrenamiento> findAll(){
         return Flux.fromIterable(repo.findAll());
     }
@@ -32,6 +36,16 @@ public class EntrenamientoController {
     public Mono<Entrenamiento> findById(@PathVariable int id){
         var ant = repo.findById(id);
         return Mono.just(ant.get());
+    }
+
+    @GetMapping("/find/{fecha}")
+    public Flux<Entrenamiento> findByDate(@PathVariable String fecha){
+        var fechaToLocalDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        var entto = repo.findByFecha(fechaToLocalDate);
+        if(entto == null){
+            throw new RuntimeException("Not found");
+        }
+        return Flux.fromIterable(entto);
     }
 
     @PostMapping("/create")
