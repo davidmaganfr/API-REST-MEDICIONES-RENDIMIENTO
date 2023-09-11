@@ -30,18 +30,21 @@ public class AntropometriaController {
         return Flux.fromIterable(repo.findAll());
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/find/id/{id:\\d+}")
     public Mono<Antropometria> findById(@PathVariable int id){
         var ant = repo.findById(id);
+        if(ant.isEmpty()){
+            throw new RuntimeException("No exiten registros con el id: " + id);
+        }
         return Mono.just(ant.get());
     }
 
-    @GetMapping("/find/{fecha}")
+    @GetMapping("/find/date/{fecha:\\d{4}-\\d{1,2}-\\d{1,2}}")
     public Flux<Antropometria> findByDate(@PathVariable String fecha){
         var fechaToLocalDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         var antro = repo.findByFecha(fechaToLocalDate);
-        if (antro == null){
-            throw new RuntimeException("Not found");
+        if (antro.isEmpty()){
+            throw new RuntimeException("No existen registros para la fecha: " + fecha);
         }
         return Flux.fromIterable(antro);
     }
@@ -52,17 +55,20 @@ public class AntropometriaController {
         return Mono.just(antro);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{id:\\d+}")
     public void update(@RequestBody Antropometria antro, @PathVariable int id){
         antro.setId(id);
-        if(repo.existsById(id)){
-            throw new RuntimeException("Not found");
+        if(!repo.existsById(id)){
+            throw new RuntimeException("No existe el registro con id: " + id);
         }
         repo.save(antro);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id:\\d+}")
     public void delete(@PathVariable int id){
+        if(!repo.existsById(id)){
+            throw new RuntimeException("No existe el registro con id: " + id);
+        } 
         repo.deleteById(id);
     }
 }
